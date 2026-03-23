@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stripe-webhook-system
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_REGION: ${AWS_REGION}
+      BUSINESS_NAME: ${BUSINESS_NAME}
+      BUSINESS_EMAIL: ${BUSINESS_EMAIL}
+      FRONTEND_URL: http://localhost:3000
+    volumes:
+      - ./server:/app/server
+      - ./public:/app/public
+      - /app/node_modules
+    networks:
+      - stripe-network
+
+networks:
+  stripe-network:
+    driver: bridge

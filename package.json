@@ -1,0 +1,22 @@
+{
+  "name": "stripe-webhook-system",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Stripe webhook processing and payment system with video streaming",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["stripe", "webhook", "payments", "video-streaming", "aws-s3"],
+  "author": "Dakota James LLC",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "stripe": "^14.10.0",
+    "dotenv": "^16.3.1",
+    "aws-sdk": "^2.1500.0",
+    "multer": "^1.4.5-lts.1"
+  }
+}
