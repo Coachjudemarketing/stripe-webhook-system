@@ -1,12 +1,24 @@
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export async function createCheckoutSession(customerId, courseId, amount) {
+export async function createCheckoutSession(customerId, courseId, amountCents) {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       customer: customerId,
-      line_items: [{ price_data: { currency: "usd", product_data: { name: `Course: ${courseId}`, description: "Access to course materials and videos" }, unit_amount: amount * 100 }, quantity: 1 }],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `Course: ${courseId}`,
+              description: "Access to course materials and videos"
+            },
+            unit_amount: amountCents
+          },
+          quantity: 1
+        }
+      ],
       mode: "payment",
       success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`
